@@ -193,20 +193,20 @@
                   "value": "-XX:MaxRAMPercentage=75"
                 },
                 {
-                  "name": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),'MODRINTH_VERSION_ID', '')]",
-                  "value": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),parameters('ModrinthVersionID'), '')]"
+                  "name": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),'MODRINTH_VERSION_ID', 'a')]",
+                  "value": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),parameters('ModrinthVersionID'), 'a')]"
                 },
                 {
-                  "name": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_LOADER', '')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthLoader'), '')]"
+                  "name": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_LOADER', 'b')]",
+                  "value": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthLoader'), 'b')]"
                 },
                 {
-                  "name": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_MC_VERSION', '')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthMcVersion'), '')]"
+                  "name": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_MC_VERSION', 'c')]",
+                  "value": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthMcVersion'), 'c')]"
                 },
                 {
-                  "name": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_DEFAULT_VERSION_TYPE', '')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthDefaultVersionType'), '')]"
+                  "name": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_DEFAULT_VERSION_TYPE', 'd')]",
+                  "value": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthDefaultVersionType'), 'd')]"
                 },
                 {
                   "name": "SERVER_PORT",
