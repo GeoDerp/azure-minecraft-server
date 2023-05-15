@@ -19,11 +19,11 @@
         "false"
       ]  
     },
-    "minecraftVersion": {
+    "serverModrinth": {
       "type": "string",
-      "defaultValue": "1.16.2",
+      "defaultValue": "https://raw.githubusercontent.com/USER/REPO/VERSION/pack.toml",
       "metadata": {
-        "description": "The version that'll be used by your server"
+        "description": "Modrinth Modpack project slug"
       }
     },
     "containerImage": {
@@ -39,23 +39,38 @@
         "description": "The server operator usernames (comma separated)"
       }
     },
-    "serverType": {
+    "ModrinthLoader": {
       "type": "string",
       "metadata": {
-        "description": "Type of Modpack"
+        "description": "(optional) A specific modpack modloader"
       },
-      "defaultValue": "FABRIC",
       "allowedValues": [
         "FABRIC",
         "FORGE",
         "QUILT"
       ]  
     },
-    "serverPackwiz": {
+    "ModrinthDefaultVersionType": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/USER/REPO/VERSION/pack.toml",
       "metadata": {
-        "description": "json file url for packwiz"
+        "description": "(optional) A specific version type, dont use in conjunction with ModrinthVersionID"
+      },
+      "allowedValues": [
+        "release",
+        "beta",
+        "alpha"
+      ]  
+    },
+    "ModrinthVersionID": {
+      "type": "string",
+      "metadata": {
+        "description": "(optional) A specific version ID (located in the Metadata section), dont use in conjunction with ModrinthDefaultVersionType"
+      }
+    },
+    "ModrinthMcVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "(optional) A specific modpack Minecraft version"
       }
     },
     "containerRestartPolicy": {
@@ -151,21 +166,17 @@
                   "name": "EULA",
                   "value": "[parameters('EULA')]"
                 },
-                    {
-                  "name": "VERSION",
-                  "value": "[parameters('minecraftVersion')]"
-                },
                 {
                   "name": "OPS",
                   "value": "[parameters('serverOperators')]"
                 },
                 {
                   "name": "TYPE",
-                  "value": "[parameters('serverType')]"
+                  "value": "MODRINTH"
                 },
                 {
-                  "name": "PACKWIZ_URL",
-                  "value": "[parameters('serverPackwiz')]"
+                  "name": "MODRINTH_PROJECT",
+                  "value": "[parameters('serverModrinth')]"
                 },
                 {
                   "name": "MEMORY",
@@ -175,6 +186,10 @@
                   "name": "JVM_XX_OPTS",
                   "value": "-XX:MaxRAMPercentage=75"
                 },
+                [if(not(empty(parameters('ModrinthMcVersion'))), json('{\"name\": \"MODRINTH_MC_VERSION\",\"value\": \"[parameters(\'ModrinthMcVersion\')]\"},'), json('null'))]
+                [if(not(empty(parameters('ModrinthDefaultVersionType'))), json('{\"name\": \"MODRINTH_DEFAULT_VERSION_TYPE\",\"value\": \"[parameters(\'ModrinthDefaultVersionType\')]\"},'), json('null'))]
+                [if(not(empty(parameters('ModrinthLoader'))), json('{\"name\": \"MODRINTH_LOADER\",\"value\": \"[parameters(\'ModrinthLoader\')]\"},'), json('null'))]
+                [if(not(empty(parameters('ModrinthVersionID'))), json('{\"name\": \"MODRINTH_VERSION_ID\",\"value\": \"[parameters(\'ModrinthVersionID\')]\"},'), json('null'))]
                 {
                   "name": "SERVER_PORT",
                   "value": "[parameters('McPort')]"

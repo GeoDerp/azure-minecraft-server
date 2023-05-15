@@ -1,5 +1,6 @@
 ____________
-## **Forked:** Added support for Packwiz modpacks 
+## **Forked:** Added support for Modrinth modpacks
+*container information can be found [here](https://github.com/itzg/docker-minecraft-server/blob/master/README.md#running-a-server-with-a-modrinth-modpack)*
 ____________
 <br>
 
