@@ -21,7 +21,7 @@
     },
     "serverModrinth": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/USER/REPO/VERSION/pack.toml",
+      "defaultValue": "NAgQgs3R",
       "metadata": {
         "description": "Modrinth Modpack project slug"
       }
@@ -53,7 +53,7 @@
         "description": "(optional) A specific modpack modloader. Don't use in conjunction with ModrinthVersionID"
       },
       "allowedValues": [
-        "optional",
+		    "optional",
         "FABRIC",
         "FORGE",
         "QUILT"
@@ -73,7 +73,7 @@
         "description": "(optional) A specific Modrinth version type. Don't use in conjunction with ModrinthVersionID"
       },
       "allowedValues": [
-        "optional",
+		    "optional",
         "release",
         "beta",
         "alpha"
