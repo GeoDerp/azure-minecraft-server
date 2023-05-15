@@ -53,6 +53,7 @@
         "description": "(optional) A specific modpack modloader. Don't use in conjunction with ModrinthVersionID"
       },
       "allowedValues": [
+        "optional",
         "FABRIC",
         "FORGE",
         "QUILT"
@@ -72,6 +73,7 @@
         "description": "(optional) A specific Modrinth version type. Don't use in conjunction with ModrinthVersionID"
       },
       "allowedValues": [
+        "optional",
         "release",
         "beta",
         "alpha"
