@@ -23,14 +23,14 @@
       "type": "string",
       "defaultValue": "NAgQgs3R",
       "metadata": {
-        "description": "Modrinth Modpack project slug"
+        "description": "Modrinth Modpack project slug or project ID"
       }
     },
     "containerImage": {
       "type": "string",
       "defaultValue": "latest",
       "metadata": {
-        "description": "The Container Tag (Ex. java17-alpine)"
+        "description": "The itzg docker-minecraft-server Container Tag (Ex. java17-alpine)"
       }
     },
     "serverOperators": {
@@ -39,18 +39,18 @@
         "description": "The server operator usernames (comma separated)"
       }
     },
-    "ModrinthVersionID": {
+    "ModrinthVersion": {
       "type": "string",
       "defaultValue": "optional",
       "metadata": {
-        "description": "(optional) A specific version ID (located in the Metadata section). Warning, This will override all other optional sections bellow"
+        "description": "(optional) A specific version ID  or number located (located in the Metadata section). Warning, This will override all other optional sections bellow"
       }
     },
     "ModrinthLoader": {
       "type": "string",
       "defaultValue": "optional",
       "metadata": {
-        "description": "(optional) A specific modpack modloader. Don't use in conjunction with ModrinthVersionID"
+        "description": "(optional) A specific modpack modloader. Don't use in conjunction with ModrinthVersion"
       },
       "allowedValues": [
 		    "optional",
@@ -59,18 +59,18 @@
         "QUILT"
       ]  
     },
-    "ModrinthMcVersion": {
+    "McVersion": {
       "type": "string",
       "defaultValue": "optional",
       "metadata": {
-        "description": "(optional) A specific modpack Minecraft version (ex. 1.19.2). Don't use in conjunction with ModrinthVersionID"
+        "description": "(optional) A specific Minecraft version (ex. 1.19.2). Don't use in conjunction with ModrinthVersion or ModrinthDefaultVersionType. Will only work if Modpack Version supports the MC Version."
       }
     },
-    "ModrinthDefaultVersionType": {
+	    "ModrinthDefaultVersionType": {
       "type": "string",
       "defaultValue": "optional",
       "metadata": {
-        "description": "(optional) A specific Modrinth version type. Don't use in conjunction with ModrinthVersionID"
+        "description": "(optional) A specific Modrinth version type. Don't use in conjunction with ModrinthVersion or McVersion"
       },
       "allowedValues": [
 		    "optional",
@@ -186,27 +186,23 @@
                 },
                 {
                   "name": "MEMORY",
-                  "value": ""
+                  "value": "[concat(mul(mul(parameters('serverMemory'),10), 75),'M')]"
                 },
                 {
-                  "name": "JVM_XX_OPTS",
-                  "value": "-XX:MaxRAMPercentage=75"
+                  "name": "[if(not(equals(parameters('ModrinthVersion'), 'optional')),'MODRINTH_VERSION', 'a')]",
+                  "value": "[if(not(equals(parameters('ModrinthVersion'), 'optional')),parameters('ModrinthVersion'), 'a')]"
                 },
                 {
-                  "name": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),'MODRINTH_VERSION_ID', 'a')]",
-                  "value": "[if(not(equals(parameters('ModrinthVersionID'), 'optional')),parameters('ModrinthVersionID'), 'a')]"
+                  "name": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersion'), 'optional')), 'MODRINTH_LOADER', 'b')]",
+                   "value": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersion'), 'optional')), parameters('ModrinthLoader'), 'b')]"
                 },
                 {
-                  "name": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_LOADER', 'b')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthLoader'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthLoader'), 'b')]"
+                  "name": "[if(and(not(equals(parameters('McVersion'), 'optional')), equals(parameters('ModrinthVersion'), 'optional')), 'VERSION', 'c')]",
+                  "value": "[if(and(not(equals(parameters('McVersion'), 'optional')), equals(parameters('ModrinthVersion'), 'optional')), parameters('McVersion'), 'c')]"
                 },
                 {
-                  "name": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_MC_VERSION', 'c')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthMcVersion'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthMcVersion'), 'c')]"
-                },
-                {
-                  "name": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), 'MODRINTH_DEFAULT_VERSION_TYPE', 'd')]",
-                  "value": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), equals(parameters('ModrinthVersionID'), 'optional')), parameters('ModrinthDefaultVersionType'), 'd')]"
+                  "name": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), and(equals(parameters('ModrinthVersion'), 'optional'), equals(parameters('McVersion'), 'optional')) ), 'MODRINTH_DEFAULT_VERSION_TYPE', 'd')]",
+                  "value": "[if(and(not(equals(parameters('ModrinthDefaultVersionType'), 'optional')), and(equals(parameters('ModrinthVersion'), 'optional'), equals(parameters('McVersion'), 'optional')) ), parameters('ModrinthDefaultVersionType'), 'd')]"
                 },
                 {
                   "name": "SERVER_PORT",
